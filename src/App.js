@@ -9,6 +9,7 @@ import ReactNotifications from 'react-notifications-component';
 import {
   onSuccsessNotification,
   onErrorNotification,
+  onDeleteNotification,
 } from './Components/Notifications/Notifications';
 import s from './../src/Components/Container/Container.module.css';
 
@@ -34,6 +35,7 @@ class App extends React.Component {
     this.setState({
       contacts: this.state.contacts.filter(cont => cont.id !== id),
     });
+    onDeleteNotification();
   };
 
   // Проверка на повтор

@@ -42,3 +42,30 @@ export const onErrorNotification = () => {
   });
   //   alert('Такой контакт уже есть');
 };
+
+export const onDeleteNotification = () => {
+  store.addNotification({
+    title: 'Информация!',
+    message: 'Констакт успешно удален',
+    type: 'warning', // 'default', 'success', 'info', 'warning'
+    container: 'top-right', // where to position the notifications
+    animationIn: ['animate__animated', 'animate__fadeIn'],
+    animationOut: ['animate__animated', 'animate__fadeOut'],
+    dismiss: {
+      duration: 2000,
+      onScreen: true,
+    },
+    touchSlidingExit: {
+      swipe: {
+        duration: 400,
+        timingFunction: 'ease-out',
+        delay: 0,
+      },
+      fade: {
+        duration: 400,
+        timingFunction: 'ease-out',
+        delay: 0,
+      },
+    },
+  });
+};
