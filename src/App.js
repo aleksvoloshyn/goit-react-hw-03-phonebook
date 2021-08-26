@@ -6,7 +6,10 @@ import { Filter } from './Components/Filter/Filter';
 import { ContactList } from './Components/ContactList/ContactList';
 import { v4 as uuidv4 } from 'uuid';
 import ReactNotifications from 'react-notifications-component';
-import { store } from 'react-notifications-component';
+import {
+  onSuccsessNotification,
+  onErrorNotification,
+} from './Components/Notifications/Notifications';
 import s from './../src/Components/Container/Container.module.css';
 
 import 'react-notifications-component/dist/theme.css';
@@ -25,60 +28,6 @@ class App extends React.Component {
       filter: '',
     };
   }
-
-  onSuccsessNotification = () => {
-    store.addNotification({
-      title: 'Congratulations!',
-      message: 'Контакт успешно добавлен в справочник',
-      type: 'success', // 'default', 'success', 'info', 'warning'
-      container: 'top-right', // where to position the notifications
-      animationIn: ['animate__animated', 'animate__fadeIn'],
-      animationOut: ['animate__animated', 'animate__fadeOut'],
-      dismiss: {
-        duration: 2000,
-        onScreen: true,
-      },
-      touchSlidingExit: {
-        swipe: {
-          duration: 400,
-          timingFunction: 'ease-out',
-          delay: 0,
-        },
-        fade: {
-          duration: 400,
-          timingFunction: 'ease-out',
-          delay: 0,
-        },
-      },
-    });
-  };
-
-  onErrorNotification = () => {
-    store.addNotification({
-      title: 'Ошибочка...!',
-      message: 'Такой контакт уже есть',
-      type: 'danger', // 'default', 'success', 'info', 'warning'
-      container: 'top-right', // where to position the notifications
-      animationIn: ['animate__animated', 'animate__fadeIn'],
-      animationOut: ['animate__animated', 'animate__fadeOut'],
-      dismiss: {
-        duration: 2000,
-        onScreen: true,
-      },
-      touchSlidingExit: {
-        swipe: {
-          duration: 400,
-          timingFunction: 'ease-out',
-          delay: 0,
-        },
-        fade: {
-          duration: 400,
-          timingFunction: 'ease-out',
-          delay: 0,
-        },
-      },
-    });
-  };
 
   // Удалить текущий контакт
   onDeleteContact = id => {
@@ -108,10 +57,10 @@ class App extends React.Component {
           ...this.state.contacts,
         ],
       });
-      this.onSuccsessNotification();
+      onSuccsessNotification();
       return;
     } else {
-      this.onErrorNotification();
+      onErrorNotification();
       return;
     }
   };
@@ -148,6 +97,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
+        <ReactNotifications />
         <Container>
           <h1 className={s.container__label}>Phonebook</h1>
           <ContactForm onSubmit={this.addContact} />
@@ -159,7 +109,6 @@ class App extends React.Component {
             deleteContact={this.onDeleteContact}
           />
         </Container>
-        <ReactNotifications />
       </div>
     );
   }
